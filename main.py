@@ -1,15 +1,9 @@
-import requests
+from client import ConversorCoin
+from utils import formatar_moeda
 
 
-def conversor(coin_origin, coin_target):
-    response = requests.get(
-        url=f'https://economia.awesomeapi.com.br/last/{coin_origin}-{coin_target}'
-    )
+client = ConversorCoin()
 
-    if response.status_code == 404:
-        return response.json().get('message')
+conversion = int(client.conversor_coin('BTC', 'BRL'))
 
-    return response.json()[f'{coin_origin}{coin_target}']['bid']
-
-
-print(conversor('BTC', 'BRL'))
+print(f'{formatar_moeda(conversion)}')
